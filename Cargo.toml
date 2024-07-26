@@ -1,0 +1,19 @@
+[package]
+name = "proxytester"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.9", features = ["derive"] }
+curl = "0.4.46"
+futures = "0.3.30"
+ratatui = "0.27.0"
+thiserror = "1.0.63"
+tokio = { version = "1.38.1", features = ["full"] }
+
+[[bin]]
+name = "proxytester"
+
+[dev-dependencies]
+http-test-server = "2.1.1"
+tempdir = "0.3.7"
