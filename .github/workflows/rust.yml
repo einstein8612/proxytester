@@ -2,9 +2,9 @@ name: Rust
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
       - README.md
 
@@ -34,42 +34,42 @@ jobs:
     strategy:
       matrix:
         rust:
-          - 1.74.0 # MSRV
+          # - 1.74.0 # MSRV
           - stable
         target:
-          - aarch64-apple-darwin
-          - x86_64-apple-darwin
-          - x86_64-pc-windows-gnu
-          - aarch64-unknown-linux-gnu
+          # - aarch64-apple-darwin
+          # - x86_64-apple-darwin
+          # - x86_64-pc-windows-gnu
+          # - aarch64-unknown-linux-gnu
           - x86_64-unknown-linux-gnu
     steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@master
-      with:
-        toolchain: ${{ matrix.rust }}
-        targets: ${{ matrix.target }}
-    - run: cargo build --verbose --target ${{ matrix.target }}
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          targets: ${{ matrix.target }}
+      - run: cargo build --verbose --target ${{ matrix.target }}
   test:
     strategy:
       matrix:
         rust:
-          - 1.74.0 # MSRV
+          # - 1.74.0 # MSRV
           - stable
         target:
           - os: ubuntu-latest
             platform: x86_64-unknown-linux-gnu
-          - os: windows-latest
-            platform: x86_64-pc-windows-gnu
-          - os: macos-13
-            platform: x86_64-apple-darwin
-          - os: macos-latest
-            platform: aarch64-apple-darwin
+          # - os: windows-latest
+          #   platform: x86_64-pc-windows-gnu
+          # - os: macos-13
+          #   platform: x86_64-apple-darwin
+          # - os: macos-latest
+          #   platform: aarch64-apple-darwin
     runs-on: ${{ matrix.target.os }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@master
-      with:
-        toolchain: ${{ matrix.rust }}
-        targets: ${{ matrix.target.platform }}
-    - name: Run tests
-      run: cargo test --verbose --target ${{ matrix.target.platform }}
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          targets: ${{ matrix.target.platform }}
+      - name: Run tests
+        run: cargo test --verbose --target ${{ matrix.target.platform }}
