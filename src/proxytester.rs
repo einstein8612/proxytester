@@ -539,7 +539,7 @@ mod tests {
         let received = receiver.recv().await.unwrap();
         received.result.expect("proxy test success");
 
-        assert!(proxy_used.lock().expect("lock poisoned").clone());
+        assert!(*proxy_used.lock().expect("lock poisoned"));
     }
 
     fn create_temp_file(content: &str) -> (PathBuf, TempDir) {
