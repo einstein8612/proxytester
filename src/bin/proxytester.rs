@@ -43,7 +43,6 @@ struct Args {
 ///
 /// Initialize the UI
 ///
-#[cfg(not(tarpaulin_include))] // Ignored since it involves actual terminal
 fn init_ui() -> io::Result<Terminal<CrosstermBackend<Stdout>>> {
     enable_raw_mode()?;
     stdout().execute(EnterAlternateScreen)?;
@@ -54,7 +53,6 @@ fn init_ui() -> io::Result<Terminal<CrosstermBackend<Stdout>>> {
 ///
 /// Cleanup the UI
 ///
-#[cfg(not(tarpaulin_include))] // Ignored since it involves actual terminal
 fn cleanup_ui(terminal: &mut Terminal<CrosstermBackend<Stdout>>) -> io::Result<()> {
     disable_raw_mode()?;
     stdout().execute(LeaveAlternateScreen)?;
@@ -82,7 +80,6 @@ impl App {
     ///
     /// Run the application
     ///
-    #[cfg(not(tarpaulin_include))] // Ignored since it's a never ending loop
     pub async fn run(
         &mut self,
         terminal: &mut Terminal<CrosstermBackend<Stdout>>,
@@ -115,7 +112,6 @@ impl App {
     /// Simpel wrapper around the `event::poll` function
     /// to use it in an async context like the `select!` macro
     ///
-    #[cfg(not(tarpaulin_include))] // Ignored since it's a util func
     async fn wait_for_event() -> io::Result<()> {
         loop {
             let res = tokio::task::spawn_blocking(|| event::poll(POLL_DURATION)).await??;
@@ -132,7 +128,6 @@ impl App {
     /// This function will handle the events that are available,
     /// propogating the events to the correct handler.
     ///
-    #[cfg(not(tarpaulin_include))] // Ignored since it involves keyboard input
     fn handle_events(&mut self) -> io::Result<()> {
         // We assume that an event is available
         // as we waited for an event to occur
@@ -178,7 +173,6 @@ impl App {
     ///
     /// Render the frame
     ///
-    #[cfg(not(tarpaulin_include))] // Ignored since it's a util func
     fn render_frame(&self, frame: &mut Frame) {
         frame.render_widget(self, frame.size());
     }
@@ -293,7 +287,6 @@ impl Widget for &App {
 }
 
 #[tokio::main]
-#[cfg(not(tarpaulin_include))] // Ignored since it's the main function
 async fn main() -> io::Result<()> {
     // Parse the command line arguments
     let args = Args::parse();

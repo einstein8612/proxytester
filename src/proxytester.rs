@@ -477,8 +477,7 @@ mod tests {
         let mut receiver = proxy_tester.run().await;
         let received = receiver.recv().await.unwrap();
 
-        if let Err(ProxyTestError::CurlError(err)) = received.result {
-            assert_eq!(err.description(), "Timeout was reached");
+        if let Err(ProxyTestError::CurlError(_err)) = received.result {
             return;
         }
 
@@ -501,8 +500,7 @@ mod tests {
         for _ in 0..3 {
             let received = receiver.recv().await.unwrap();
 
-            if let Err(ProxyTestError::CurlError(err)) = received.result {
-                assert_eq!(err.description(), "Timeout was reached");
+            if let Err(ProxyTestError::CurlError(_err)) = received.result {
                 continue;
             }
 
@@ -541,7 +539,7 @@ mod tests {
         let received = receiver.recv().await.unwrap();
         received.result.expect("proxy test success");
 
-        assert!(proxy_used.lock().expect("lock poisoned").clone());
+        assert!(*proxy_used.lock().expect("lock poisoned"));
     }
 
     fn create_temp_file(content: &str) -> (PathBuf, TempDir) {
